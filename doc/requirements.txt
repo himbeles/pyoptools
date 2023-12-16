@@ -2,7 +2,6 @@ Pillow
 jupyter
 ipython
 six
-numpy
 scipy
 Cython
 matplotlib

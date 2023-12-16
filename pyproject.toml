@@ -1,3 +1,66 @@
 [build-system]
-requires = ["setuptools", "wheel", "numpy==1.21.6", "Cython==0.29.30"]
+requires = ["setuptools", "numpy", "Cython"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyoptools"
+version = "0.2.0"
+
+authors = [
+  { name="Ricardo Amezquita Orozco", email="ramezquitao@cihologramas.com" },
+]
+
+description = "Optical ray tracing simulation system"
+readme = "README.md"
+requires-python = ">=3.7"
+license = { file = "LICENSE.txt" }
+
+dependencies = [
+    'numpy', 
+    'scipy', 
+    'imageio', 
+    'PyYAML', 
+    'matplotlib', 
+    'ijson',
+    'pythreejs',
+    'importlib-resources'
+]
+
+
+[project.urls]
+Homepage = "https://github.com/cihologramas/pyoptools/"
+Source = "https://github.com/cihologramas/pyoptools/"
+
+[project.optional-dependencies]
+dev = [
+    "cibuildwheel",
+    "pytest",
+    "ruff",
+    "sphinx",
+]
+
+[tool.pytest.ini_options]
+addopts = [
+    "-ra",
+    "--failed-first",
+    "--junit-xml=test_results.xml",
+    "--color=yes"
+]
+testpaths = "tests"
+
+[tool.ruff]
+
+[tool.setuptools.package-data]
+"pyoptools.raytrace.mat_lib" = [
+    "data/glass/*",
+    "data/glass/*/*",
+    "data/glass/*/*/*",
+    "data/inorganic/*",
+    "data/inorganic/*/*",
+    "data/organic/*",
+    "data/organic/*/*",
+    "data/aliases.json",
+]
+"pyoptools.raytrace.library" = [
+    "catalogs/*",
+]
