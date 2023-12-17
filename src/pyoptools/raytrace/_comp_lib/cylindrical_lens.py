@@ -56,7 +56,7 @@ class CylindricalLens(Component):
         curvature_s1=1.0 / 200,
         curvature_s2=1.0 / 200,
         *args,
-        **kwargs
+        **kwargs,
     ):
         Component.__init__(self, *args, **kwargs)
         self.size = size

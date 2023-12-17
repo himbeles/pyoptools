@@ -35,7 +35,7 @@ class RectGratting(Component):
         angle=0,
         M=[1],
         *args,
-        **kwargs
+        **kwargs,
     ):
         Component.__init__(self, *args, **kwargs)
         self.size = size

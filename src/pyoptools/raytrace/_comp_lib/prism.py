@@ -59,7 +59,7 @@ class RightAnglePrism(Component):
         reflega=0,
         reflegb=0,
         *args,
-        **kwargs
+        **kwargs,
     ):
         Component.__init__(self, *args, **kwargs)
 
@@ -133,7 +133,6 @@ class PentaPrism(Component):
     # TODO: El pentaprisma está abierto por arriba y por abajo. Hay que definir las superficies para cerrarlo
 
     def __init__(self, s, *args, **kwargs):
-
         Component.__init__(self, *args, **kwargs)
 
         s1 = Plane(shape=Rectangular(size=(s, s)))

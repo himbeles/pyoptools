@@ -28,6 +28,7 @@ import numpy
 import io
 from math import sqrt
 
+
 class ModelNotImplemented(Exception):
     """Indicates that the model to calculate the index of refraction is not
     implemented yet"""
@@ -55,7 +56,7 @@ class Material:
 
             # Need to do it this way so profiler works,
             # can't resize while having references to the original
-            #self.__coef__ = coef.copy().resize(cl)
+            # self.__coef__ = coef.copy().resize(cl)
 
     @property
     def nd(self):
@@ -72,10 +73,12 @@ class Material:
             return (self.n(0.5893) - 1) / (self.n(0.4861) - self.n(0.6563))
 
     def __eq__(self, other):
-        return (isinstance(other, self.__class__) and
-                numpy.array_equal(self.__coef__, other.__coef__) and
-                self.__nd__ == other.__nd__ and
-                self.__vd__ == other.__vd__)
+        return (
+            isinstance(other, self.__class__)
+            and numpy.array_equal(self.__coef__, other.__coef__)
+            and self.__nd__ == other.__nd__
+            and self.__vd__ == other.__vd__
+        )
 
 
 class Sellmeier(Material):
@@ -90,11 +93,7 @@ class Sellmeier(Material):
     def n(self, l=0.58929):
         n2 = 1 + self.__coef__[0]
         for i in range(1, 17, 2):
-            n2 = n2 + (
-                self.__coef__[i]
-                * l ** 2
-                / (l ** 2 - self.__coef__[i + 1] ** 2)
-            )
+            n2 = n2 + (self.__coef__[i] * l**2 / (l**2 - self.__coef__[i + 1] ** 2))
         return sqrt(n2)
 
 
@@ -110,9 +109,7 @@ class Sellmeier_2(Material):
     def n(self, l=0.58929):
         n2 = 1 + self.__coef__[0]
         for i in range(1, 17, 2):
-            n2 = n2 + (
-                self.__coef__[i] * l ** 2 / (l ** 2 - self.__coef__[i + 1])
-            )
+            n2 = n2 + (self.__coef__[i] * l**2 / (l**2 - self.__coef__[i + 1]))
         return sqrt(n2)
 
 
@@ -198,11 +195,11 @@ def from_yml(file_path):
     """Create a material instance from a YML file path as defined at
     https://refractiveindex.info/about
     """
-    #with open(filename, encoding='utf-8') as f:
+    # with open(filename, encoding='utf-8') as f:
 
-    #print('opening ', file_path)
+    # print('opening ', file_path)
 
-    with file_path.open(encoding='utf-8') as f:
+    with file_path.open(encoding="utf-8") as f:
         mat = yaml.load(f, Loader=yaml.FullLoader)
 
     for c in mat["DATA"]:
@@ -215,12 +212,12 @@ def from_yml(file_path):
             return __models__[fn](coef, nd, vd)
 
         elif c["type"].startswith("tabulated n"):
-            with io.StringIO(c['data']) as data:
-                coef = numpy.loadtxt(data, usecols=(0,1) )
+            with io.StringIO(c["data"]) as data:
+                coef = numpy.loadtxt(data, usecols=(0, 1))
             return Tabulated_N(coef)
 
         # Changed below to support tabulated nk etc formatted data
-        #elif c["type"] == "tabulated n" :
+        # elif c["type"] == "tabulated n" :
         #    coef = numpy.fromstring(c["data"], sep=" ")
         #    l = len(coef)
         #    coef.shape = int(l / 2), 2

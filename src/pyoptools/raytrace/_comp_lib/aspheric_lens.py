@@ -87,7 +87,7 @@ class AsphericLens(Component):
         },
         s2=None,
         *args,
-        **kwargs
+        **kwargs,
     ):
         Component.__init__(self, *args, **kwargs)
 

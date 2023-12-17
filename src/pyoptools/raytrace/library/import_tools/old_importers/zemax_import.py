@@ -13,7 +13,6 @@ def convert(d):
 
 
 def zmx_read(fn):
-
     f = open(fn, "rU")
     data = f.read()
     return zmx_parse(data)

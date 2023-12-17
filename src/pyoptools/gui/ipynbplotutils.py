@@ -165,7 +165,6 @@ class Plot3D(object):
         scale=1.0,
         background=(0, 0, 0, 1),
     ):
-
         self.buffer = self.buffer_3d(
             os, center=center, size=size, rot=rot, scale=scale, background=background
         )
@@ -201,7 +200,6 @@ class Plot3D(object):
         scale=1.0,
         background=(0, 0, 0, 1),
     ):
-
         left = -size[0] / 2
         right = size[0] / 2
         top = size[1] / 2

@@ -22,7 +22,6 @@ __all__ = ["Plot3D"]
 
 
 def surf2mesh(S, P=(0, 0, 0), D=(0, 0, 0), wire=False):
-
     color = "#ffff00"
 
     points, polylist = S.polylist()
@@ -92,7 +91,6 @@ def surf2mesh(S, P=(0, 0, 0), D=(0, 0, 0), wire=False):
         material=surfaceMaterial,
     )
 
-
     surfaceMesh.position = tuple(P)
     surfaceMesh.rotateZ(D[2])
     surfaceMesh.rotateY(D[1])
@@ -121,6 +119,7 @@ def comp2mesh(C, P, D):
 
     return c
 
+
 def ray2list(ray):
     rays = []
 
@@ -131,7 +130,6 @@ def ray2list(ray):
         P2 = P1 + 10.0 * ray.dir
 
     if ray.intensity != 0:
-
         line = [list(P1), list(P2)]
         rays.append(line)
 
@@ -208,8 +206,8 @@ def sys2mesh(os):
 
 
 def Plot3D(
-    S, size=(800, 200), center=(0, 0, 0), rot=[(pi / 3.0, pi / 6.0, 0)],
-    scale=1):
+    S, size=(800, 200), center=(0, 0, 0), rot=[(pi / 3.0, pi / 6.0, 0)], scale=1
+):
     """Function to create 3D interactive visualization widgets in a jupyter
     notebook
 
@@ -239,7 +237,7 @@ def Plot3D(
     )
 
     # Set up a scene and render it:
-    #cam = py3js.PerspectiveCamera(position=[0, 0, 500], fov=70, children=[light], aspect=width / height)
+    # cam = py3js.PerspectiveCamera(position=[0, 0, 500], fov=70, children=[light], aspect=width / height)
 
     pos = array((0, 0, 500))
 
@@ -248,7 +246,7 @@ def Plot3D(
         pos = dot(rot_y(r[1]), pos)
         pos = dot(rot_x(r[0]), pos)
 
-    #cam = py3js.OrthographicCamera(
+    # cam = py3js.OrthographicCamera(
     #    -width / 2 * scale,
     #    width / 2 * scale,
     #    height / 2 * scale,
@@ -256,7 +254,7 @@ def Plot3D(
     #    children=[light],
     #    position=list(pos),
     #    zoom=scale,
-    #)
+    # )
 
     cam = py3js.OrthographicCamera(
         -width / 2 * scale,

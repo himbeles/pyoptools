@@ -120,7 +120,7 @@ def rot_z(tz):
 
 
 def cross(a, b):
-    """3D Vector product producto vectorial """
+    """3D Vector product producto vectorial"""
     x1, y1, z1 = a
     x2, y2, z2 = b
     return array((y1 * z2 - y2 * z1, x2 * z1 - x1 * z2, x1 * y2 - x2 * y1))
@@ -206,8 +206,9 @@ def matrix_interpolation(M, i, j, type="bilinear"):
     ]
     if type not in inter_types:
         raise ValueError(
-            "Interpolation type not allowed. The allowed types"
-            " are: {0}".format(inter_types)
+            "Interpolation type not allowed. The allowed types" " are: {0}".format(
+                inter_types
+            )
         )
     if type == "nearest":
         iri = int(round(i))
@@ -662,9 +663,9 @@ def spot_info(C):
     ym = mean(Y)
     X = array(X) - xm
     Y = array(Y) - ym
-    R = sqrt(X ** 2 + Y ** 2)
-    XR = sqrt(X ** 2)
-    YR = sqrt(Y ** 2)
+    R = sqrt(X**2 + Y**2)
+    XR = sqrt(X**2)
+    YR = sqrt(Y**2)
     return mean(R), (xm, ym), (mean(XR), mean(YR)), R.max()
 
 

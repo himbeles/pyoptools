@@ -13,6 +13,7 @@ import json
 
 from importlib_resources import files
 
+
 # This class overrides the module definition
 class MaterialLibrary:
     """The material library provides access to refractive index data
@@ -62,22 +63,21 @@ class MaterialLibrary:
     `material.aliases`.
     """
 
-    def __init__(self, prefix = None):
-
+    def __init__(self, prefix=None):
         self.prefix = prefix
         self._cache = {}
 
-        self.dp = files('pyoptools.raytrace.mat_lib').joinpath('data')
+        self.dp = files("pyoptools.raytrace.mat_lib").joinpath("data")
 
         if self.prefix is None:
-            self.glass_path = self.dp/'glass'
+            self.glass_path = self.dp / "glass"
         else:
-            self.glass_path = self.dp/'glass'/prefix
+            self.glass_path = self.dp / "glass" / prefix
 
-        with (self.dp/'aliases.json').open() as af:
+        with (self.dp / "aliases.json").open() as af:
             self.aliases = json.load(af)
 
-        self._compound_lib_names = ['organic', 'inorganic']
+        self._compound_lib_names = ["organic", "inorganic"]
 
     def _material_factory(self, name, mat_path):
         "Builds and caches a material given path to yml file"
@@ -94,30 +94,27 @@ class MaterialLibrary:
     def _get_in_aliases_catalog(self, name):
         "Restricted version of get aliases for when accessing in a catalog"
 
-        if (name in self.aliases and
-            self.aliases[name]['library'] == self.prefix):
+        if name in self.aliases and self.aliases[name]["library"] == self.prefix:
             a = self.aliases[name]
-            ap = self.dp/'glass'/a['library']/f"{a['material']}.yml"
+            ap = self.dp / "glass" / a["library"] / f"{a['material']}.yml"
             return self._material_factory(name, ap)
         else:
             raise KeyError
 
     def _get_in_aliases_base(self, name):
-
         if name in self.aliases:
             a = self.aliases[name]
-            if a['type'] == 'organic':
-                return self.organic[a['material']]
-            elif a['type'] == 'inorganic':
-                return self.inorganic[a['material']]
-            elif a['type'] == 'glass':
-                ap = self.dp/'glass'/a['library']/f"{a['material']}.yml"
+            if a["type"] == "organic":
+                return self.organic[a["material"]]
+            elif a["type"] == "inorganic":
+                return self.inorganic[a["material"]]
+            elif a["type"] == "glass":
+                ap = self.dp / "glass" / a["library"] / f"{a['material']}.yml"
                 return self._material_factory(name, ap)
         else:
             raise KeyError
 
     def __getitem__(self, name: str):
-
         if name in self._cache:
             return self._cache[name]
 
@@ -130,8 +127,7 @@ class MaterialLibrary:
         # find in glasses
         matches = list(self.glass_path.glob(f"**/{name}.yml"))
         if len(matches) > 1:
-            warning = (f"Multiple matches for glass type {name}. "
-                       f"Use one of: ")
+            warning = f"Multiple matches for glass type {name}. " f"Use one of: "
             for m in matches:
                 warning += f"material.{m.parts[-2]}['{name}'] or "
             raise KeyError(warning[:-4])
@@ -180,14 +176,14 @@ class MaterialLibrary:
         results = []
         # Check in aliases:
         for k, v in self.aliases.items():
-            if search in k or search in v['material']:
+            if search in k or search in v["material"]:
                 results.append((None, k, None))
 
         # Check in glasses:
         matches = list(self.glass_path.glob(f"**/*{search}*"))
         for m in matches:
             catalog = m.parts[-2]
-            name = m.parts[-1].split('.')[0]
+            name = m.parts[-1].split(".")[0]
             results.append((catalog, name, None))
 
         # Check in compounds:
@@ -197,8 +193,7 @@ class MaterialLibrary:
                 results += r
 
         if exact:
-            results = list(filter(lambda mat_item: mat_item[1]==search,
-                                  results))
+            results = list(filter(lambda mat_item: mat_item[1] == search, results))
         if unalias:
             unaliased = []
             for r in results:
@@ -206,9 +201,11 @@ class MaterialLibrary:
                     realmat = self.aliases[r[1]]
 
                     if realmat["type"] != "glass":
-                        raise ValueError("Don't know how to handle {}".format(realmat["type"]))
+                        raise ValueError(
+                            "Don't know how to handle {}".format(realmat["type"])
+                        )
 
-                    unaliased.append((realmat["library"], realmat["material"],None))
+                    unaliased.append((realmat["library"], realmat["material"], None))
                 else:
                     unaliased.append(r)
             results = unaliased
@@ -225,7 +222,7 @@ class MaterialLibrary:
 
         return results
 
-    def get_from(self, name: str, libs: str, check_aliases = True):
+    def get_from(self, name: str, libs: str, check_aliases=True):
         """Finds a glass type located in a specific manufacturer library,
         or space-separate list of libraries.
 
@@ -247,23 +244,23 @@ class MaterialLibrary:
         """
 
         if self.prefix is not None:
-            raise Exception('get_from only available on base library.')
+            raise Exception("get_from only available on base library.")
 
-        for libname in libs.split(' '):
+        for libname in libs.split(" "):
             libname = libname.lower()
-            if (self.glass_path/libname).is_dir():
+            if (self.glass_path / libname).is_dir():
                 try:
-                    return MaterialLibrary(prefix = libname)[name]
+                    return MaterialLibrary(prefix=libname)[name]
                 except AttributeError:
-                    #print('No library')
+                    # print('No library')
                     pass
                 except KeyError:
-                    #print('Not in library')
+                    # print('Not in library')
                     pass
 
         warning = f"Material {name} not found in any of {libs.split()}."
         if check_aliases:
-            warning = warning[:-1]+" or aliases."
+            warning = warning[:-1] + " or aliases."
             try:
                 return self._get_in_aliases(name)
             except KeyError:
@@ -278,10 +275,10 @@ class MaterialLibrary:
         if self.prefix is not None:
             raise AttributeError()
 
-        if name == 'inorganic' or name == 'organic':
-            return CompoundLibrary(self.dp/name, aliases=self.aliases)
-        if (self.glass_path/name).is_dir():
-            return MaterialLibrary(prefix = name)
+        if name == "inorganic" or name == "organic":
+            return CompoundLibrary(self.dp / name, aliases=self.aliases)
+        if (self.glass_path / name).is_dir():
+            return MaterialLibrary(prefix=name)
         else:
             raise AttributeError(f"Material {name} not found.")
 
@@ -291,11 +288,11 @@ class MaterialLibrary:
 
         libpaths = list(self.glass_path.glob("*"))
 
-        return ["aliases"]+[lib_path.parts[-1] for lib_path in libpaths]
+        return ["aliases"] + [lib_path.parts[-1] for lib_path in libpaths]
 
-    def get_glass_materials_from_library(self,libname):
+    def get_glass_materials_from_library(self, libname):
         """Returns a list of strings containing the names of the materials
-           defined in the library 'libname'
+        defined in the library 'libname'
         """
 
         if libname == "aliases":
@@ -316,7 +313,7 @@ class CompoundLibrary:
         self.compound_dirs = {}
         for i in lib_path.iterdir():
             if i.is_dir():
-                self.compound_dirs[i.name.split(' ')[0]] = i
+                self.compound_dirs[i.name.split(" ")[0]] = i
 
         self._cache = {}
 
@@ -327,19 +324,20 @@ class CompoundLibrary:
         return mat
 
     def __getitem__(self, identifier: str):
-
         # Check in cache
         if identifier in self._cache:
             return self._cache[identifier]
 
         # Check in aliases
-        if (self.aliases is not None and
-            identifier in self.aliases and
-            self.aliases[identifier]['type'] == self.lib_path.name):
-            identifier = self.aliases[identifier]['material']
+        if (
+            self.aliases is not None
+            and identifier in self.aliases
+            and self.aliases[identifier]["type"] == self.lib_path.name
+        ):
+            identifier = self.aliases[identifier]["material"]
 
-        tokens = identifier.split(':')
-        tokens = [t for t in tokens if t != '']
+        tokens = identifier.split(":")
+        tokens = [t for t in tokens if t != ""]
         compound = tokens[0]
         try:
             reference = tokens[1]
@@ -354,9 +352,9 @@ class CompoundLibrary:
 
         if reference is None:
             # if reference unspecified, default to the first item
-            compound_file = list(cd.glob('*.yml'))[0]
+            compound_file = list(cd.glob("*.yml"))[0]
         else:
-            compound_file = cd/f"{reference}.yml"
+            compound_file = cd / f"{reference}.yml"
 
         if compound_file.exists():
             return self._material_factory(identifier, compound_file)
@@ -364,19 +362,20 @@ class CompoundLibrary:
             raise KeyError(f"Compound reference not found for {identifier}.")
 
     def find_material(self, search, printout=True):
-
         results = []
         for i in self.lib_path.iterdir():
             if i.is_dir():
                 if search in i.name:
-                    for ref in i.glob('*.yml'):
-                        results.append((
-                            self.lib_path.name,
-                            i.name.split(' ')[0],
-                            ref.name.split('.')[0]
-                        ))
+                    for ref in i.glob("*.yml"):
+                        results.append(
+                            (
+                                self.lib_path.name,
+                                i.name.split(" ")[0],
+                                ref.name.split(".")[0],
+                            )
+                        )
 
         return results
 
-sys.modules[__name__] = MaterialLibrary()
 
+sys.modules[__name__] = MaterialLibrary()

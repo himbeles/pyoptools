@@ -116,7 +116,6 @@ surfdict = {"SPH": PSpherical, "OBJ": PObj, "PLA": PPlane, "APE": PApe, "IMG": P
 
 class PSystem:  # (MutableSequence):
     def __init__(self, lst):
-
         self.surfaces = []
 
         for s in lst:
@@ -167,7 +166,6 @@ class PSystem:  # (MutableSequence):
             return mat
 
     def get_principal_ray(self):
-
         h = self.surfaces[0].h
         MS, APP = self.get_matrix(ua=True)
         u = -h * MS[0, 0] / MS[0, 1]
@@ -182,7 +180,6 @@ class PSystem:  # (MutableSequence):
         return PRay(0, u)
 
     def reverse(self):
-
         rl = []
 
         for i in range(len(self.surfaces) - 1, 0, -1):

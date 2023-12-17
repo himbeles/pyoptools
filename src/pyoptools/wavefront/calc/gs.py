@@ -88,7 +88,6 @@ def ffGS(z, target, estimate=None, iterations=20, error=None):
     ntarget = target.abs() / target.abs().max()
 
     for n in range(iterations):
-
         if n != 0:
             holo = imp.propagate_fraunhofer(-z)
 
@@ -198,7 +197,6 @@ def fftGS(z, target, estimate=None, iterations=20, error=None, flagRand=True):
     ntarget = target.abs() / target.abs().max()
 
     for n in range(iterations):
-
         if n != 0:
             holo = fftshift(fft2(ifftshift(imp)))
 
@@ -305,7 +303,6 @@ def frGS(z, target, estimate=None, iterations=20, error=None):
     ntarget = target.abs() / target.abs().max()
 
     for n in range(iterations):
-
         if n != 0:
             holo = imp.propagate_fresnel(-z)
 
@@ -410,7 +407,6 @@ def asGS(z, target, estimate=None, iterations=20, error=None):
     ntarget = target.abs() / target.abs().max()
 
     for n in range(iterations):
-
         if n != 0:
             holo = imp.propagate_ae(-z)
 

@@ -16,7 +16,6 @@ from numpy import angle, exp, pi, complex128, zeros, sqrt, int32, zeros_like, on
 from numpy.random import random
 
 
-
 KERNEL = """   
     //There are some operations that are not defined in the RV770 GPUs
     // for doubles, so a cast to float is needed
@@ -194,7 +193,6 @@ def gs_mod(idata, itera=10, osize=256):
     mask = exp(2.0j * pi * random(idata.shape))
     mask[zone] = 0
 
-
     fdata = fftshift(
         fft2(ifftshift(idata + mask))
     )  # Nota, colocar esta mascara es muy importante, por que si no  no converge tan rapido
@@ -283,7 +281,6 @@ def gs_gpu(idata, itera=100):
 
 
 def gs_mod_gpu(idata, itera=10, osize=256):
-
     cut = osize // 2
 
     pl = cl.get_platforms()[0]

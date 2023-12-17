@@ -39,7 +39,7 @@ def _frft2(x, alpha):
     z[0:m, :] = exp(1.0j * pi * (j[0:m] ** 2) * float(alpha) / m)
     z[-m:, :] = exp(1.0j * pi * ((j[-m:] - 2 * p) ** 2) * float(alpha) / m)
 
-    d = exp(-1.0j * pi * j ** 2 ** float(alpha) / m) * ifft(
+    d = exp(-1.0j * pi * j**2 ** float(alpha) / m) * ifft(
         fft(y, axis=0) * fft(z, axis=0), axis=0
     )
 
@@ -58,7 +58,7 @@ def rs_kernel(x=0.0, y=0.0, z=0.0, n=1.0):
     """
     l = 0.442e-3
     k = 2.0 * pi * n / l
-    R2 = x ** 2 + y ** 2 + z ** 2
+    R2 = x**2 + y**2 + z**2
     R = sqrt(R2)
     ikR = 1.0j * k * R
     R3 = R2 * R

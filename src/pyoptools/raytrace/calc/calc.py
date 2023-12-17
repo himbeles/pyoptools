@@ -777,7 +777,7 @@ def find_reference_sphere_radius(ip, pl):
     # Encontrar el radio de la esfera de mejor ajuste
     def F(z):
         dist = pla - (sqrt(ipa[:, 0] ** 2 + ipa[:, 1] ** 2 + (ipa[:, 2] - z) ** 2) - z)
-        u = sqrt((dist ** 2).sum())
+        u = sqrt((dist**2).sum())
         # print "*", u
         # u=dist[-1]
         # print u

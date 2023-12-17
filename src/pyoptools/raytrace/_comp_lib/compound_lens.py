@@ -67,7 +67,7 @@ class Doublet(System):
         material_l1=1.0,
         material_l2=1.0,
         *args,
-        **kwarks
+        **kwarks,
     ):
         System.__init__(self, *args, **kwarks)
         self.radius = radius
@@ -168,7 +168,7 @@ class AirSpacedDoublet(System):
         material_l1=1.0,
         material_l2=1.0,
         *args,
-        **kwarks
+        **kwarks,
     ):
         System.__init__(self, *args, **kwarks)
         self.radius = radius
