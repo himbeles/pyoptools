@@ -6,12 +6,11 @@ the refraction index.
 It uses the database from  https://refractiveindex.info
 """
 
-from .mat_eq import from_yml, ModelNotImplemented
+from .mat_eq import from_yml
 
 import sys
 import json
 
-from pathlib import Path
 from importlib_resources import files
 
 # This class overrides the module definition

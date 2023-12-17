@@ -22,7 +22,7 @@ from math import isnan
 
 from pyoptools.raytrace.system import System
 from pyoptools.raytrace.comp_lib import SphericalLens
-from pyoptools.raytrace.mat_lib import Material, material
+from pyoptools.raytrace.mat_lib import material
 
 
 class Doublet(System):

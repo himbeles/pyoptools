@@ -20,7 +20,6 @@ try:
     from OpenGL.raw.osmesa.mesa import (
         OSMesaCreateContext,
         OSMesaMakeCurrent,
-        OSMesaDestroyContext,
     )
 
 except:

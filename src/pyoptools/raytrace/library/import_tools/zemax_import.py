@@ -542,7 +542,7 @@ class ZmfImporter:
         for k, v in self.zmx_data.items():
             try:
                 descriptor = self.pyot_descriptor(k)
-            except Exception as ex:
+            except Exception:
                 print(f"Exception converting element {k}\n")
                 print("Raw data : \n")
                 print(textwrap.indent(v, ' '*4))
@@ -620,7 +620,7 @@ class ZmfImporter:
 
             # PARM items need to be in a sub-dict
             if code == 'PARM':
-                if not 'PARM' in surflist[-1]:
+                if 'PARM' not in surflist[-1]:
                     surflist[-1]['PARM'] = {}
                 surflist[-1]['PARM'][data[0]] = data[1]
             # otherwise, put data in array

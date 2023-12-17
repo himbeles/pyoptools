@@ -25,7 +25,6 @@ from numpy import pi
 from pyoptools.raytrace.system import System
 from pyoptools.raytrace.component import Component
 from pyoptools.raytrace.comp_lib import RightAnglePrism
-from pyoptools.raytrace.mat_lib import Material
 from pyoptools.raytrace.surface import Plane
 from pyoptools.raytrace.shape import Rectangular
 

@@ -9,14 +9,11 @@ from numpy import (
     float64,
     dot,
     sqrt,
-    ceil,
     floor,
     dot,
     meshgrid,
     zeros,
-    zeros_like,
     where,
-    nan,
     pi,
     isnan,
     nonzero,
@@ -207,7 +204,7 @@ def matrix_interpolation(M, i, j, type="bilinear"):
         "nearest",
         "bilinear",
     ]
-    if not type in inter_types:
+    if type not in inter_types:
         raise ValueError(
             "Interpolation type not allowed. The allowed types"
             " are: {0}".format(inter_types)

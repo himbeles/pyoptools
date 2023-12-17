@@ -1,5 +1,4 @@
 from pyoptools.all import *
-from time import time
 from numpy import exp, pi, angle, ones
 from numpy.random import random
 from numpy.fft import fft2, ifft2, fftshift, ifftshift

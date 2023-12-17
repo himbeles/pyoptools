@@ -28,20 +28,8 @@ This module is not working and should not be used
 
 from numpy import (
     array,
-    asarray,
-    arange,
-    polyadd,
-    polymul,
-    polysub,
-    polyval,
-    dot,
-    inf,
-    roots,
     zeros,
-    meshgrid,
     sqrt,
-    where,
-    abs,
 )
 
 # from enthought.traits.api import Tuple, Float, Array, Int

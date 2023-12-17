@@ -41,8 +41,6 @@ from numpy import (
     pi,
     dot,
     array,
-    arctan2,
-    alltrue,
     isnan,
     nan,
     mgrid,

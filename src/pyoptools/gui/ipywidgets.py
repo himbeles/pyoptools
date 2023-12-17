@@ -7,7 +7,6 @@ in `jupyter notebooks <http://jupyter.org>`_.
 
 from pyoptools.raytrace.system import System
 from pyoptools.raytrace.component import Component
-from pyoptools.raytrace.surface import Surface
 from pyoptools.misc.pmisc import wavelength2RGB, cross, rot_x, rot_y, rot_z
 
 try:

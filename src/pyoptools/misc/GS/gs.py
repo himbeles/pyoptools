@@ -16,7 +16,6 @@ from numpy import angle, exp, pi, complex128, zeros, sqrt, int32, zeros_like, on
 from numpy.random import random
 
 
-from pylab import imshow, colorbar
 
 KERNEL = """   
     //There are some operations that are not defined in the RV770 GPUs
@@ -195,7 +194,6 @@ def gs_mod(idata, itera=10, osize=256):
     mask = exp(2.0j * pi * random(idata.shape))
     mask[zone] = 0
 
-    # ~ imshow(abs(mask)),colorbar()
 
     fdata = fftshift(
         fft2(ifftshift(idata + mask))
